@@ -1,0 +1,11 @@
+.DS_Store
+
+# Frontend build artifacts and dependencies
+ai-chat-frontend-keycloak-auth/node_modules/
+ai-chat-frontend-keycloak-auth/build/
+
+# Python caches and local environments
+**/__pycache__/
+**/*.pyc
+**/.venv/
+**/.env
