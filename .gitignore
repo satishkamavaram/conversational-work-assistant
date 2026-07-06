@@ -8,4 +8,5 @@ ai-chat-frontend-keycloak-auth/build/
 **/__pycache__/
 **/*.pyc
 **/.venv/
+**/venv/
 **/.env
