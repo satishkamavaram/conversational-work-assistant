@@ -10,3 +10,6 @@ ai-chat-frontend-keycloak-auth/build/
 **/.venv/
 **/venv/
 **/.env
+
+# Claude Code hook logs (local, demo-only)
+.claude/logs/

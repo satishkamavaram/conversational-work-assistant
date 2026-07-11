@@ -1,0 +1,104 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "bash .claude/hooks/check_python_syntax.sh" }
+        ]
+      },
+      {
+        "hooks": [
+          { "type": "command", "command": "bash .claude/hooks/log_event.sh" }
+        ]
+      }
+    ],
+    "SessionStart": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "Setup": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "UserPromptSubmit": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "UserPromptExpansion": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "PreToolUse": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "PermissionRequest": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "PermissionDenied": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "PostToolUseFailure": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "PostToolBatch": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "Notification": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "MessageDisplay": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "SubagentStart": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "SubagentStop": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "TaskCreated": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "TaskCompleted": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "StopFailure": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "TeammateIdle": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "InstructionsLoaded": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "ConfigChange": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "CwdChanged": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "FileChanged": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "WorktreeCreate": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "WorktreeRemove": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "PreCompact": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "PostCompact": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "Elicitation": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "ElicitationResult": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ],
+    "SessionEnd": [
+      { "hooks": [ { "type": "command", "command": "bash .claude/hooks/log_event.sh" } ] }
+    ]
+  }
+}
