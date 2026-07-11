@@ -106,7 +106,7 @@ function App() {
         <div className="header-left">
           <MessageCircle size={24} />
           <div>
-            <h1>AI Agent</h1>
+            <h1>ConversAI</h1>
             <p className="header-subtitle">
               {agentCard ? `${agentCard.name} via A2A` : 'A2A client'}
             </p>
