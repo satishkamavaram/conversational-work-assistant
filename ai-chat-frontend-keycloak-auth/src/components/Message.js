@@ -55,6 +55,10 @@ const FileAttachment = ({ file }) => {
 };
 
 const Message = ({ message, role }) => {
+  const displayContent = message.responseReady
+    ? message.content
+    : (message.isStreaming ? 'Working…' : (message.content || ''));
+  const currentStatus = message.statusText || (message.isStreaming ? 'Working…' : '');
   const formatTime = (timestamp) => {
     return new Date(timestamp).toLocaleTimeString('en-US', {
       hour: '2-digit',
@@ -64,6 +68,7 @@ const Message = ({ message, role }) => {
 
   // one or more files (e.g. CV PDF) delivered through A2A
   const files = message.files || [];
+  const events = message.events || [];
 
   // Heuristic: detect ASCII/Markdown tables, including ones without leading/trailing pipes.
   const isAsciiTable = (text) => {
@@ -85,10 +90,27 @@ const Message = ({ message, role }) => {
           <span className="message-role">{role === 'user' ? 'You' : 'Assistant'}</span>
           <span className="message-time">{formatTime(message.timestamp)}</span>
         </div>
-        {isAsciiTable(message.content) ? (
-          <pre className="message-text pre">{message.content}</pre>
+        {role !== 'user' && (currentStatus || events.length > 0) && (
+          <div className="message-activity">
+            <div className="message-activity-header">
+              <span>Backend activity</span>
+              {message.isStreaming && <span className="message-activity-live">Live</span>}
+            </div>
+            {events.length > 0 && (
+              <div className="message-events">
+                {events.map((eventText, index) => (
+                  <div key={`${eventText}-${index}`} className="message-event">
+                    {eventText}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+        {isAsciiTable(displayContent) ? (
+          <pre className="message-text pre">{displayContent}</pre>
         ) : (
-          <div className="message-text">{message.content}</div>
+          <div className="message-text">{displayContent}</div>
         )}
         {files.map((file, idx) => (
           <FileAttachment key={`${file.name || 'file'}-${idx}`} file={file} />

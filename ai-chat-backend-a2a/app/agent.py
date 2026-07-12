@@ -1,28 +1,40 @@
 from __future__ import annotations
 
-from app.config import settings
-from app.models import AgentReply, UploadedFile
-from app.services.concept_guide_service import ConceptGuideService
+from collections.abc import AsyncIterator
+
+from app.models import AgentReply, AgentStreamEvent, UploadedFile
 from app.services.strands_agent_service import StrandsAgentService
 
 
 class CopilotConceptAgent:
     def __init__(self) -> None:
-        self._guide = ConceptGuideService()
-        self._strands = (
-            StrandsAgentService() if settings.agent_mode == 'strands' else None
-        )
+        self._strands = StrandsAgentService()
 
     async def reply(
         self,
         query: str,
         uploads: list[UploadedFile],
         authorization_header: str | None = None,
+        trace_session_id: str | None = None,
     ) -> AgentReply:
-        if settings.agent_mode == 'guide':
-            return self._guide.reply(query, uploads)
-        if settings.agent_mode == 'strands' and self._strands:
-            return await self._strands.reply(query, uploads, authorization_header)
-        raise ValueError(
-            f'Unsupported A2A_AGENT_MODE: {settings.agent_mode}. Expected "guide" or "strands".'
+        return await self._strands.reply(
+            query,
+            uploads,
+            authorization_header,
+            trace_session_id,
         )
+
+    async def stream_reply(
+        self,
+        query: str,
+        uploads: list[UploadedFile],
+        authorization_header: str | None = None,
+        trace_session_id: str | None = None,
+    ) -> AsyncIterator[AgentStreamEvent]:
+        async for event in self._strands.stream_reply(
+            query,
+            uploads,
+            authorization_header,
+            trace_session_id,
+        ):
+            yield event

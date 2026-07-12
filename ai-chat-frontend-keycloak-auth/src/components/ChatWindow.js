@@ -18,7 +18,7 @@ const ChatWindow = ({ messages }) => {
       <div className="messages-container">
         {messages.length === 0 ? (
           <div className="empty-chat">
-            <p>Start a conversation with the AI Agent!</p>
+            <p>Start a conversation.</p>
           </div>
         ) : (
           messages.map((message) => (

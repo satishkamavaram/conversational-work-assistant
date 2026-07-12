@@ -8,7 +8,9 @@ from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill
+from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 from app.config import settings
@@ -22,29 +24,29 @@ logging.basicConfig(
 
 def build_agent_card() -> AgentCard:
     return AgentCard(
-        name='Copilot Customization Guide Agent',
-        description='A demonstration A2A backend that explains custom instructions, custom agents, agent skills, and subagents for the paired frontend/backend project.',
+        name='Copilot Concepts Strands Agent',
+        description='A Strands-powered A2A backend that uses LiteLLM/OpenAI and MCP tools for the paired frontend/backend project.',
         url=settings.public_base_url,
         version='1.0.0',
         default_input_modes=['text'],
-        default_output_modes=['text'],
-        capabilities=AgentCapabilities(streaming=False),
+        default_output_modes=['text', 'file'],
+        capabilities=AgentCapabilities(streaming=True),
         skills=[
             AgentSkill(
-                id='copilot-customization-guide',
-                name='Copilot Customization Guide',
-                description='Explains how to apply Copilot customization features in this frontend/backend setup and can export a study guide file.',
-                tags=['copilot', 'a2a', 'frontend', 'backend'],
+                id='copilot-concepts-strands-agent',
+                name='Copilot Concepts Strands Agent',
+                description='Answers requests with a Strands agent and uses MCP tools for file and workflow operations.',
+                tags=['copilot', 'a2a', 'frontend', 'backend', 'strands', 'mcp'],
                 examples=[
-                    'Explain custom agents versus skills in this project.',
-                    'Export a study guide for custom instructions and subagents.',
+                    'Summarize the available MCP tools.',
+                    'Download a CV document and return it as a file.',
                 ],
             )
         ],
     )
 
 
-def build_app():
+def build_app() -> Starlette:
     agent_card = build_agent_card()
     handler = DefaultRequestHandler(
         agent_executor=CopilotConceptExecutor(),
@@ -62,14 +64,20 @@ def build_app():
         allow_headers=['*'],
     )
 
-    @app.route('/healthz', methods=['GET'])
-    async def healthz(request):
+    async def healthz(request: Request) -> JSONResponse:
         return JSONResponse({'status': 'ok'})
+
+    app.add_route('/healthz', healthz, methods=['GET'])
 
     return app
 
 
 def main() -> None:
+    if not logging.getLogger().handlers:
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s %(levelname)s [%(name)s] %(message)s',
+        )
     uvicorn.run(build_app(), host=settings.host, port=settings.port)
 
 
