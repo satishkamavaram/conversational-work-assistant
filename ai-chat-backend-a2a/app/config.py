@@ -18,6 +18,7 @@ class Settings:
     openai_api_key: str = os.getenv('OPENAI_API_KEY', '')
     strands_model_id: str = os.getenv('STRANDS_MODEL_ID', 'openai/gpt-5-mini')
     mcp_server_url: str = os.getenv('MCP_SERVER_URL', 'http://localhost:9000/mcp')
+    log_level: str = os.getenv('A2A_LOG_LEVEL', 'INFO')
 
 
 settings = Settings()

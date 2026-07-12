@@ -59,6 +59,20 @@ app/
 
 The backend listens on `http://localhost:8082` by default.
 
+## Logging
+
+`app/executor.py` (the sole A2A protocol boundary) logs the raw A2A wire payloads at `INFO` level:
+
+- `a2a.request.payload` — the inbound `message/send` request message.
+- `a2a.stream.payload` — every event pushed onto the A2A event queue (the created `Task`, status updates, and the artifact update).
+- `a2a.response.payload` — the response `Artifact` built for the request.
+
+Each payload is the model's `model_dump(mode='json', exclude_none=True)` output (the same shape sent/received on the wire), with any `bytes`/`content_base64`/`bytes_base64` field redacted to `{"redacted": true, "length": N}` so large file payloads never bloat the logs.
+
+`A2A_LOG_LEVEL` (default `INFO`) controls the root logger level via `logging.basicConfig` in `app/server.py`; set it to `DEBUG` to enable any future, more verbose trace-level logging without changing default behavior today.
+
+**Privacy note:** at `INFO` level, raw user message text and tool call/result content are now written to the logs. Treat backend logs as containing sensitive user content and handle/retain them accordingly.
+
 ## Frontend integration
 
 The frontend uses the A2A agent card and JSON-RPC endpoint from this server instead of the old WebSocket connection.

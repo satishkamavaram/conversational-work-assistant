@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+
 import uvicorn
 
 from a2a.server.apps import A2AStarletteApplication
@@ -11,6 +13,11 @@ from starlette.responses import JSONResponse
 
 from app.config import settings
 from app.executor import CopilotConceptExecutor
+
+logging.basicConfig(
+    level=getattr(logging, settings.log_level.upper(), logging.INFO),
+    format='%(asctime)s %(levelname)s %(name)s %(message)s',
+)
 
 
 def build_agent_card() -> AgentCard:
