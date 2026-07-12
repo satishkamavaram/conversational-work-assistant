@@ -1,4 +1,4 @@
-# AI Agent Concepts
+# Conversational Work Assistant
 
 This repository contains a small A2A chat stack with three local processes:
 
