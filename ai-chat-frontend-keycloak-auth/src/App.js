@@ -7,6 +7,7 @@ import './App.css';
 import keycloak from './auth/keycloak';
 
 function App() {
+  const headerSubtitle = 'Your general-purpose conversation assistant';
   const [kcReady, setKcReady] = useState(false);
   const [kcAuthenticated, setKcAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
@@ -81,7 +82,7 @@ function App() {
     return () => clearInterval(interval);
   }, [kcAuthenticated]);
 
-  const { agentCard, isConnected, isSending, messages, sendMessage, connectionError, disconnect } = useA2AClient(token);
+  const { isConnected, isSending, messages, sendMessage, connectionError, disconnect } = useA2AClient(token);
 
   const handleLogout = async () => {
     try { disconnect && disconnect(); } catch { /* no-op */ }
@@ -108,7 +109,7 @@ function App() {
           <div>
             <h1>ConversAI</h1>
             <p className="header-subtitle">
-              {agentCard ? `${agentCard.name} via A2A` : 'A2A client'}
+              {headerSubtitle}
             </p>
           </div>
         </div>

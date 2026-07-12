@@ -21,3 +21,10 @@ class GeneratedFile:
 class AgentReply:
     content: str
     files: list[GeneratedFile] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class AgentStreamEvent:
+    text_chunk: str = ''
+    status_text: str = ''
+    final_reply: AgentReply | None = None

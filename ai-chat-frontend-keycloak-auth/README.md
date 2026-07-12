@@ -42,13 +42,19 @@ The frontend expects the paired backend in `../ai-chat-backend-a2a` to be runnin
 http://localhost:8082
 ```
 
-During development, the React dev server proxies requests to port 8082.
+For live A2A streaming during development, the frontend should call the backend
+directly at `http://localhost:8082` instead of relying on the React dev server
+proxy, which can buffer streamed responses and delay event visibility in the UI.
 
 If you need a different backend URL, set:
 
 ```bash
 REACT_APP_A2A_SERVER_URL=http://your-host:your-port
 ```
+
+If `REACT_APP_A2A_SERVER_URL` is not set, the frontend now defaults to
+`http://localhost:8082` in development so streamed A2A status events reach the
+browser immediately.
 
 ## Usage
 
